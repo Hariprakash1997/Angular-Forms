@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-form-sku',
@@ -9,10 +9,25 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class DemoFormSkuComponent implements OnInit {
 
   myForm: FormGroup;
+  sku: AbstractControl;
+  productName: AbstractControl;
 
   constructor( fb: FormBuilder ) {
     this.myForm = fb.group({
-      'sku': 'ABC123'
+      'sku': ['', Validators.compose([
+        Validators.required, skuValidator
+      ])],
+      productName: ['', Validators.required]
+    });
+
+    this.sku = this.myForm.controls['sku'];
+
+    this.sku.valueChanges.subscribe((value: string) => {
+      console.log('Changed value to : ', value);
+    });
+
+    this.myForm.valueChanges.subscribe((form: any) => {
+      console.log('Form changed : ', form);
     });
   }
 
@@ -23,4 +38,10 @@ export class DemoFormSkuComponent implements OnInit {
     console.log(value);
   }
 
+}
+
+function skuValidator(control: FormControl): { [s: string]: boolean } {
+    if (!control.value.match(/^123/)) {
+      return {invalidSku: true};
+    }
 }
