@@ -3,15 +3,17 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { DemoFormSkuComponent } from './demo-form-sku/demo-form-sku.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DemoFormSkuComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
